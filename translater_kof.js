@@ -20,6 +20,8 @@ $("body").contents()
   .wrap( "<b class='ltCount'></b>" )
   .end();//Так же ищем текст в самом body и добавляем им класс
 
+$('.ltCount').css('font-weight','normal');
+objL['lt0'] = document.title;
 var countLTcount = $('.ltCount').length;
 for(var a = 1 ; a < countLTcount+1 ; a++){
   var trimElem = $.trim($('.ltCount').eq(a-1).text());
@@ -33,7 +35,23 @@ for(var key in objL){
   }
 }//Удаляем все пустые элементы обьекта и элементы кода
 
-console.log(objL); //Выводим объект в консоль     
+
+console.log(objL); //Выводим объект в консоль  
+
+var funcL = function(){
+  $('.wrapLT').prepend('var newTranslateObj = {');
+  for(var key in objL){
+    $('.wrapLT').append('<div>'+key+' : \''+objL[key]+'\',</div>');
+  }
+  $('.wrapLT').append('};');
+}
+
+$('body').append('<div class="wrapLT" style="position:absolute;top:0;left:0;border:3px solid #00DDFF;padding:3px;color:#005EFF;background-color:#fff;z-index:999999999999;"><span class="closeWrapLT" style="font-size:20px;position:absolute;top:0;right:0;color:Red;cursor:pointer;">x</span></div>');
+$('.wrapLT').append(funcL());
+$('.closeWrapLT').click(function(){
+  $('.wrapLT').remove();
+});
+//Выводим объект для копирования
 
 // ========== Конец кода вставки ============
 
@@ -46,6 +64,6 @@ console.log(objL); //Выводим объект в консоль
   //lt10: "text1",
   //lt14: "text6"}
                                          
-//for(var key in newTranslateObj){
-  //$('.'+key+'').text(newTranslateObj[key]);                             
-//}             
+// for(var key in newTranslateObj){
+//   $('.'+key+'').text(newTranslateObj[key]);                             
+// }             
